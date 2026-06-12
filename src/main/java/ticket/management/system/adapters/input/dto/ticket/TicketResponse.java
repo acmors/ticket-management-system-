@@ -2,6 +2,7 @@ package ticket.management.system.adapters.input.dto.ticket;
 
 import ticket.management.system.domain.entities.ticket.enums.TicketPriority;
 import ticket.management.system.domain.entities.ticket.enums.TicketStatus;
+import ticket.management.system.domain.entities.user.User;
 
 public class TicketResponse {
 
@@ -11,18 +12,20 @@ public class TicketResponse {
     private String description;
     private TicketPriority priority;
     private TicketStatus status;
-    private String assignedTo;
+    private User createdBy;
+    private User assignedTo;
 
     public TicketResponse() {
     }
 
-    public TicketResponse(Long id, Integer ticketNumber, String title, String description, TicketPriority priority, TicketStatus status, String assignedTo) {
+    public TicketResponse(Long id, Integer ticketNumber, String title, String description, TicketPriority priority, TicketStatus status, User createdBy, User assignedTo) {
         this.id = id;
         this.ticketNumber = ticketNumber;
         this.title = title;
         this.description = description;
         this.priority = priority;
         this.status = status;
+        this.createdBy = createdBy;
         this.assignedTo = assignedTo;
     }
 
@@ -74,11 +77,19 @@ public class TicketResponse {
         this.status = status;
     }
 
-    public String getAssignedTo() {
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public User getAssignedTo() {
         return assignedTo;
     }
 
-    public void setAssignedTo(String assignedTo) {
+    public void setAssignedTo(User assignedTo) {
         this.assignedTo = assignedTo;
     }
 }

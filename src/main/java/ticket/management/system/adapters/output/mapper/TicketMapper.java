@@ -14,7 +14,8 @@ public class TicketMapper {
                 ticket.getTicketStatus(),
                 ticket.getCreatedAt(),
                 ticket.getUpdatedAt(),
-                ticket.getAssignedTo()
+                UserMapper.toEntity(ticket.getCreatedBy()),
+                UserMapper.toEntity(ticket.getAssignedTo())
         );
     }
 
@@ -28,7 +29,8 @@ public class TicketMapper {
                 entity.getTicketStatus(),
                 entity.getCreatedAt(),
                 entity.getUpdatedAt(),
-                entity.getAssignedTo()
+                UserMapper.toDomain(entity.getCreatedBy()),
+                UserMapper.toDomain(entity.getAssignedTo())
         );
     }
 }

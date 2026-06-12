@@ -1,8 +1,8 @@
-package ticket.management.system.adapters.output.repository;
+package ticket.management.system.adapters.output.repository.ticket;
 import org.springframework.stereotype.Component;
 import ticket.management.system.adapters.output.mapper.TicketMapper;
 import ticket.management.system.domain.entities.ticket.Ticket;
-import ticket.management.system.domain.ports.TicketRepositoryPort;
+import ticket.management.system.domain.ports.ticket.TicketRepositoryPort;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

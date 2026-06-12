@@ -1,7 +1,7 @@
 package ticket.management.system.domain.usecase.ticket;
 
 import ticket.management.system.domain.entities.ticket.Ticket;
-import ticket.management.system.domain.ports.TicketRepositoryPort;
+import ticket.management.system.domain.ports.ticket.TicketRepositoryPort;
 
 import java.util.List;
 

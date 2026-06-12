@@ -1,6 +1,7 @@
 package ticket.management.system.domain.entities.ticket;
 import ticket.management.system.domain.entities.ticket.enums.TicketPriority;
 import ticket.management.system.domain.entities.ticket.enums.TicketStatus;
+import ticket.management.system.domain.entities.user.User;
 
 import java.time.LocalDate;
 
@@ -14,18 +15,13 @@ public class Ticket {
     private TicketStatus ticketStatus;
     private LocalDate createdAt;
     private LocalDate updatedAt;
-    private String assignedTo;
+    private User createdBy;
+    private User assignedTo;
 
     public Ticket() {
     }
 
-    public Ticket(int ticketNumber, String title, String description) {
-        this.ticketNumber = ticketNumber;
-        this.title = title;
-        this.description = description;
-    }
-
-    public Ticket(Long id, int ticketNumber, String title, String description, TicketPriority ticketPriority, TicketStatus ticketStatus, LocalDate createdAt, LocalDate updatedAt, String assignedTo) {
+    public Ticket(Long id, int ticketNumber, String title, String description, TicketPriority ticketPriority, TicketStatus ticketStatus, LocalDate createdAt, LocalDate updatedAt, User createdBy, User assignedTo) {
         this.id = id;
         this.ticketNumber = ticketNumber;
         this.title = title;
@@ -34,6 +30,7 @@ public class Ticket {
         this.ticketStatus = ticketStatus;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.createdBy = createdBy;
         this.assignedTo = assignedTo;
     }
 
@@ -101,11 +98,19 @@ public class Ticket {
         this.updatedAt = updatedAt;
     }
 
-    public String getAssignedTo() {
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public User getAssignedTo() {
         return assignedTo;
     }
 
-    public void setAssignedTo(String assignedTo) {
+    public void setAssignedTo(User assignedTo) {
         this.assignedTo = assignedTo;
     }
 }

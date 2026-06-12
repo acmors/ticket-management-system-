@@ -1,11 +1,10 @@
 package ticket.management.system.adapters.output.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import ticket.management.system.domain.entities.ticket.enums.TicketPriority;
 import ticket.management.system.domain.entities.ticket.enums.TicketStatus;
+import ticket.management.system.domain.entities.user.User;
+
 import java.time.LocalDate;
 
 @Entity
@@ -17,16 +16,25 @@ public class TicketEntity {
     private int ticketNumber;
     private String title;
     private String description;
+    @Enumerated(EnumType.STRING)
     private TicketPriority ticketPriority;
+    @Enumerated(EnumType.STRING)
     private TicketStatus ticketStatus;
     private LocalDate createdAt;
     private LocalDate updatedAt;
-    private String assignedTo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by")
+    private UserEntity createdBy;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_to")
+    private UserEntity assignedTo;
 
     public TicketEntity() {
     }
 
-    public TicketEntity(Long id, int ticketNumber, String title, String description, TicketPriority ticketPriority, TicketStatus ticketStatus, LocalDate createdAt, LocalDate updatedAt, String assignedTo) {
+    public TicketEntity(Long id, int ticketNumber, String title, String description, TicketPriority ticketPriority, TicketStatus ticketStatus, LocalDate createdAt, LocalDate updatedAt, UserEntity createdBy, UserEntity assignedTo) {
         this.id = id;
         this.ticketNumber = ticketNumber;
         this.title = title;
@@ -35,6 +43,7 @@ public class TicketEntity {
         this.ticketStatus = ticketStatus;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.createdBy = createdBy;
         this.assignedTo = assignedTo;
     }
 
@@ -102,11 +111,19 @@ public class TicketEntity {
         this.updatedAt = updatedAt;
     }
 
-    public String getAssignedTo() {
+    public UserEntity getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(UserEntity createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public UserEntity getAssignedTo() {
         return assignedTo;
     }
 
-    public void setAssignedTo(String assignedTo) {
+    public void setAssignedTo(UserEntity assignedTo) {
         this.assignedTo = assignedTo;
     }
 }

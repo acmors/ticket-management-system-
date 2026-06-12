@@ -1,4 +1,4 @@
-package ticket.management.system.adapters.output.repository;
+package ticket.management.system.adapters.output.repository.ticket;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ticket.management.system.adapters.output.entities.TicketEntity;

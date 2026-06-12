@@ -1,4 +1,4 @@
-package ticket.management.system.domain.ports;
+package ticket.management.system.domain.ports.ticket;
 
 import ticket.management.system.domain.entities.ticket.Ticket;
 

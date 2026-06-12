@@ -1,4 +1,4 @@
-package ticket.management.system.domain.ports;
+package ticket.management.system.domain.ports.ticket;
 
 import ticket.management.system.domain.entities.ticket.Ticket;
 
@@ -11,6 +11,5 @@ public interface TicketRepositoryPort {
     Optional<Ticket> findById(Long id);
     List<Ticket> findAll();
     void deleteById(Long id);
-
     Optional<Ticket> findByTicketNumber(int ticketNumber);
 }
