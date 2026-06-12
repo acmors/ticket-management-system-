@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: ticket.management.system
+
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: pass
+    driverClassName: org.h2.Driver
+
+  jpa:
+    show-sql: true
