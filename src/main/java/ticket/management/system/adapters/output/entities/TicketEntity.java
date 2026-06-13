@@ -8,6 +8,7 @@ import ticket.management.system.domain.entities.user.User;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "tb_ticket")
 public class TicketEntity {
 
     @Id

@@ -5,6 +5,9 @@ import ticket.management.system.domain.entities.ticket.Ticket;
 public class TicketMapper {
 
     public static TicketEntity toEntity(Ticket ticket){
+
+        if (ticket == null) return null;
+
         return new TicketEntity(
                 ticket.getId(),
                 ticket.getTicketNumber(),
@@ -20,6 +23,7 @@ public class TicketMapper {
     }
 
     public static Ticket toDomain(TicketEntity entity){
+        if (entity == null) return null;
         return new Ticket(
                 entity.getId(),
                 entity.getTicketNumber(),

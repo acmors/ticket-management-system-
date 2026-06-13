@@ -8,13 +8,10 @@ import ticket.management.system.domain.entities.ticket.Ticket;
 public class TicketMapperDTO {
 
     public static Ticket toDomain(CreateTicketRequest request){
-
         Ticket ticket = new Ticket();
-
         ticket.setTitle(request.getTitle());
         ticket.setDescription(request.getDescription());
         ticket.setTicketPriority(request.getPriority());
-
         return ticket;
     }
 
