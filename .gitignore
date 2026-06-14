@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# JWT Keys
+app.key
+app.pub
+private.key
+public.key
+*.pem
+*.key

@@ -2,6 +2,8 @@ package ticket.management.system.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
 import ticket.management.system.adapters.output.mapper.CommentMapper;
 import ticket.management.system.adapters.output.mapper.TicketMapper;
 import ticket.management.system.adapters.output.mapper.UserMapper;
@@ -11,9 +13,11 @@ import ticket.management.system.adapters.output.repository.ticket.JpaTicketRepos
 import ticket.management.system.adapters.output.repository.ticket.TicketRepositoryImpl;
 import ticket.management.system.adapters.output.repository.user.JpaUserRepository;
 import ticket.management.system.adapters.output.repository.user.UserRepositoryImpl;
+import ticket.management.system.adapters.output.security.JwtService;
 import ticket.management.system.domain.ports.comment.CommentRepositoryPort;
 import ticket.management.system.domain.ports.ticket.TicketRepositoryPort;
 import ticket.management.system.domain.ports.user.UserRepositoryPort;
+import ticket.management.system.domain.usecase.auth.AuthenticateUseCase;
 import ticket.management.system.domain.usecase.comment.CreateCommentUseCase;
 import ticket.management.system.domain.usecase.comment.FindCommentById;
 import ticket.management.system.domain.usecase.comment.ListAllCommentsUseCase;
@@ -49,8 +53,8 @@ public class AppConfig {
 
     //user use case
     @Bean
-    public CreateUserUseCase createUserUserCase(UserRepositoryPort userRepositoryPort){
-        return new CreateUserUseCase(userRepositoryPort);
+    public CreateUserUseCase createUserUserCase(UserRepositoryPort userRepositoryPort, PasswordEncoder encoder){
+        return new CreateUserUseCase(userRepositoryPort, encoder);
     }
 
     @Bean
@@ -93,6 +97,17 @@ public class AppConfig {
     public FindCommentById findCommentById(CommentRepositoryPort commentRepositoryPort){
         return new FindCommentById(commentRepositoryPort);
     }
+    //authenticade use case
+    @Bean
+    public AuthenticateUseCase authenticateUseCase(UserRepositoryPort userRepositoryPort, PasswordEncoder passwordEncoder, JwtService jwtService){
+        return new AuthenticateUseCase(userRepositoryPort, passwordEncoder, jwtService);
+    }
+
+    @Bean
+    public JwtService jwtService(JwtEncoder encoder){
+        return new JwtService(encoder);
+    }
+
     //repositories port configuration
     @Bean
     public TicketRepositoryPort ticketRepositoryPort(JpaTicketRepository jpaTicketRepository, TicketMapper ticketMapper){
