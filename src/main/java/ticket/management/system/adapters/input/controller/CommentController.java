@@ -2,6 +2,7 @@ package ticket.management.system.adapters.input.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ticket.management.system.adapters.input.dto.comment.CommentResponse;
 import ticket.management.system.adapters.input.dto.comment.CreateCommentRequest;
@@ -24,9 +25,10 @@ public class CommentController {
         this.listAllCommentsUseCase = listAllCommentsUseCase;
     }
 
-    @PostMapping
-    public ResponseEntity<CommentResponse> create(@RequestBody CreateCommentRequest request){
-        Comment created = createCommentUseCase.execute(request.getTicketId(), request.getContent());
+    @PostMapping("/{number}/comment")
+    public ResponseEntity<CommentResponse> create(@PathVariable("number") int number, Authentication authentication, @RequestBody CreateCommentRequest request){
+        String email = authentication.getName();
+        Comment created = createCommentUseCase.execute(number, email,request.getContent());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(CommentMapperDTO.toResponse(created));
     }

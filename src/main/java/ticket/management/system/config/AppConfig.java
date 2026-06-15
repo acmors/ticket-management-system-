@@ -86,8 +86,8 @@ public class AppConfig {
 
     //comment use case
     @Bean
-    public CreateCommentUseCase createCommentUseCase(CommentRepositoryPort commentRepositoryPort, TicketRepositoryPort ticketRepositoryPort){
-        return new CreateCommentUseCase(commentRepositoryPort, ticketRepositoryPort);
+    public CreateCommentUseCase createCommentUseCase(CommentRepositoryPort commentRepositoryPort, TicketRepositoryPort ticketRepositoryPort, UserRepositoryPort userRepositoryPort){
+        return new CreateCommentUseCase(commentRepositoryPort, ticketRepositoryPort, userRepositoryPort);
     }
 
     @Bean
