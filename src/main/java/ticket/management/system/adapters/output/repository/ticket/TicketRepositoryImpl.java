@@ -50,4 +50,9 @@ public class TicketRepositoryImpl implements TicketRepositoryPort {
     public Optional<Ticket> findByTicketNumber(int ticketNumber) {
         return repository.findByTicketNumber(ticketNumber).map(TicketMapper::toDomain);
     }
+
+    @Override
+    public boolean existsByTicketNumber(int number) {
+        return repository.existsByTicketNumber(number);
+    }
 }

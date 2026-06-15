@@ -1,8 +1,8 @@
 package ticket.management.system.domain.usecase.comment;
 
-import jakarta.persistence.EntityNotFoundException;
 import ticket.management.system.domain.entities.comment.Comment;
 import ticket.management.system.domain.entities.ticket.Ticket;
+import ticket.management.system.domain.exceptions.ResourceNotFoundException;
 import ticket.management.system.domain.ports.comment.CommentRepositoryPort;
 import ticket.management.system.domain.ports.ticket.TicketRepositoryPort;
 
@@ -19,7 +19,7 @@ public class CreateCommentUseCase {
     }
 
     public Comment execute(Long id, String content){
-        Ticket ticket = ticketRepositoryPort.findById(id).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
+        Ticket ticket = ticketRepositoryPort.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ticket not found"));
         Comment comment = new Comment();
         comment.setContent(content);
         comment.setTicket(ticket);

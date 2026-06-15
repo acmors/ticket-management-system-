@@ -1,7 +1,7 @@
 package ticket.management.system.domain.usecase.user;
 
-import jakarta.persistence.EntityNotFoundException;
 import ticket.management.system.domain.entities.user.User;
+import ticket.management.system.domain.exceptions.ResourceNotFoundException;
 import ticket.management.system.domain.ports.user.UserRepositoryPort;
 
 public class FindUserByIdUserCase {
@@ -14,6 +14,6 @@ public class FindUserByIdUserCase {
 
     public User execute(Long id){
         return repositoryPort.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 }

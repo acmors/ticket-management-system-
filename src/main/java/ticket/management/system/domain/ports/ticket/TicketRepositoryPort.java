@@ -12,4 +12,5 @@ public interface TicketRepositoryPort {
     List<Ticket> findAll();
     void deleteById(Long id);
     Optional<Ticket> findByTicketNumber(int ticketNumber);
+    boolean existsByTicketNumber(int number);
 }

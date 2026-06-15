@@ -3,6 +3,7 @@ package ticket.management.system.domain.usecase.user;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ticket.management.system.domain.entities.user.User;
 import ticket.management.system.domain.entities.user.enums.Roles;
+import ticket.management.system.domain.exceptions.UserAlreadyExistsException;
 import ticket.management.system.domain.ports.user.UserRepositoryPort;
 
 public class CreateUserUseCase {
@@ -16,6 +17,11 @@ public class CreateUserUseCase {
     }
 
     public User execute(User user){
+
+        var find = repositoryPort.existsUserByEmail(user.getEmail());
+        if(find) throw new UserAlreadyExistsException("Already exists an user using this email.");
+
+
         String encodedPassword = encoder.encode(user.getPassword());
         user.setRole(Roles.COMMON);
         user.setPassword(encodedPassword);

@@ -1,7 +1,7 @@
 package ticket.management.system.domain.usecase.comment;
 
-import jakarta.persistence.EntityNotFoundException;
 import ticket.management.system.domain.entities.comment.Comment;
+import ticket.management.system.domain.exceptions.ResourceNotFoundException;
 import ticket.management.system.domain.ports.comment.CommentRepositoryPort;
 
 public class FindCommentById {
@@ -14,6 +14,6 @@ public class FindCommentById {
 
     public Comment execute(Long id){
         return repositoryPort.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
     }
 }

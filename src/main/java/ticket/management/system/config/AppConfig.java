@@ -21,10 +21,7 @@ import ticket.management.system.domain.usecase.auth.AuthenticateUseCase;
 import ticket.management.system.domain.usecase.comment.CreateCommentUseCase;
 import ticket.management.system.domain.usecase.comment.FindCommentById;
 import ticket.management.system.domain.usecase.comment.ListAllCommentsUseCase;
-import ticket.management.system.domain.usecase.ticket.CreateTicketUseCase;
-import ticket.management.system.domain.usecase.ticket.FindTicketByNumberUseCase;
-import ticket.management.system.domain.usecase.ticket.ListAllTicketsUseCase;
-import ticket.management.system.domain.usecase.ticket.UpdateTicketStatusUseCase;
+import ticket.management.system.domain.usecase.ticket.*;
 import ticket.management.system.domain.usecase.user.*;
 
 @Configuration
@@ -32,8 +29,8 @@ public class AppConfig {
 
     //Ticket use case
     @Bean
-    public CreateTicketUseCase createTicketUseCase(TicketRepositoryPort ticketRepositoryPort){
-        return new CreateTicketUseCase(ticketRepositoryPort);
+    public CreateTicketUseCase createTicketUseCase(TicketRepositoryPort ticketRepositoryPort, UserRepositoryPort userRepositoryPort){
+        return new CreateTicketUseCase(ticketRepositoryPort, userRepositoryPort);
     }
 
     @Bean
@@ -49,6 +46,11 @@ public class AppConfig {
     @Bean
     public UpdateTicketStatusUseCase updateTicketStatusUseCase(TicketRepositoryPort ticketRepositoryPort){
         return new UpdateTicketStatusUseCase(ticketRepositoryPort);
+    }
+
+    @Bean
+    public AssignTicketUseCase assignTicketUseCase(TicketRepositoryPort ticketRepositoryPort, UserRepositoryPort userRepositoryPort){
+        return new AssignTicketUseCase(userRepositoryPort, ticketRepositoryPort);
     }
 
     //user use case

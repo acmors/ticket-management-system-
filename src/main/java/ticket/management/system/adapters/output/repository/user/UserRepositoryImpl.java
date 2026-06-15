@@ -47,4 +47,9 @@ public class UserRepositoryImpl implements UserRepositoryPort {
     public Optional<User> findByEmail(String email) {
         return repository.findByEmail(email).map(UserMapper::toDomain);
     }
+
+    @Override
+    public boolean existsUserByEmail(String email) {
+        return repository.existsUserByEmail(email);
+    }
 }

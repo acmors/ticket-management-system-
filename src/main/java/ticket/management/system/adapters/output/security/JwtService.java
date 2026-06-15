@@ -24,6 +24,7 @@ public class JwtService {
 
         var claims = JwtClaimsSet.builder()
                 .issuer("ticket.management.system")
+                .subject(user.getEmail())
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(3600))
                 .claim("roles", user.getRole().name())
