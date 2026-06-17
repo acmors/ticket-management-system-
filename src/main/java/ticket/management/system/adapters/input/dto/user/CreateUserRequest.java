@@ -1,11 +1,19 @@
 package ticket.management.system.adapters.input.dto.user;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import ticket.management.system.adapters.output.mapper.UserMapper;
 
 public class CreateUserRequest {
 
+
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
+    @Email
+    @NotEmpty(message = "Email cannot be empty")
     private String email;
+    @Size(min = 6, message = "Password must be more then 6 characters")
     private String password;
 
     public CreateUserRequest() {

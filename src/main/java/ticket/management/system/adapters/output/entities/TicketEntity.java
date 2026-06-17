@@ -1,14 +1,20 @@
 package ticket.management.system.adapters.output.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import ticket.management.system.domain.entities.ticket.enums.TicketPriority;
 import ticket.management.system.domain.entities.ticket.enums.TicketStatus;
 import ticket.management.system.domain.entities.user.User;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_ticket")
+@EntityListeners(AuditingEntityListener.class)
 public class TicketEntity {
 
     @Id
@@ -17,12 +23,20 @@ public class TicketEntity {
     private int ticketNumber;
     private String title;
     private String description;
+
     @Enumerated(EnumType.STRING)
     private TicketPriority ticketPriority;
+
     @Enumerated(EnumType.STRING)
     private TicketStatus ticketStatus;
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
+
+    @CreatedDate
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")
@@ -35,7 +49,7 @@ public class TicketEntity {
     public TicketEntity() {
     }
 
-    public TicketEntity(Long id, int ticketNumber, String title, String description, TicketPriority ticketPriority, TicketStatus ticketStatus, LocalDate createdAt, LocalDate updatedAt, UserEntity createdBy, UserEntity assignedTo) {
+    public TicketEntity(Long id, int ticketNumber, String title, String description, TicketPriority ticketPriority, TicketStatus ticketStatus, LocalDateTime createdAt, LocalDateTime updatedAt, UserEntity createdBy, UserEntity assignedTo) {
         this.id = id;
         this.ticketNumber = ticketNumber;
         this.title = title;
@@ -96,19 +110,19 @@ public class TicketEntity {
         this.ticketStatus = ticketStatus;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDate getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDate updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

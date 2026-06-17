@@ -1,8 +1,11 @@
 package ticket.management.system.adapters.input.dto.ticket;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import ticket.management.system.domain.entities.ticket.enums.TicketPriority;
 import ticket.management.system.domain.entities.ticket.enums.TicketStatus;
 import ticket.management.system.domain.entities.user.User;
+
+import java.time.LocalDateTime;
 
 public class TicketResponse {
 
@@ -12,19 +15,25 @@ public class TicketResponse {
     private String description;
     private TicketPriority priority;
     private TicketStatus status;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
+    private LocalDateTime createdAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
+    private LocalDateTime updatedAt;
     private User createdBy;
     private User assignedTo;
 
     public TicketResponse() {
     }
 
-    public TicketResponse(Long id, Integer ticketNumber, String title, String description, TicketPriority priority, TicketStatus status, User createdBy, User assignedTo) {
+    public TicketResponse(Long id, Integer ticketNumber, String title, String description, TicketPriority priority, TicketStatus status, LocalDateTime createdAt, LocalDateTime updatedAt, User createdBy, User assignedTo) {
         this.id = id;
         this.ticketNumber = ticketNumber;
         this.title = title;
         this.description = description;
         this.priority = priority;
         this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.createdBy = createdBy;
         this.assignedTo = assignedTo;
     }
@@ -75,6 +84,22 @@ public class TicketResponse {
 
     public void setStatus(TicketStatus status) {
         this.status = status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public User getCreatedBy() {

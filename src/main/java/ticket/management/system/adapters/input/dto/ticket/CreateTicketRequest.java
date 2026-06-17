@@ -1,10 +1,16 @@
 package ticket.management.system.adapters.input.dto.ticket;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import ticket.management.system.domain.entities.ticket.enums.TicketPriority;
 
 public class CreateTicketRequest {
 
+    @NotEmpty(message = "Title cannot be empty")
+    @Size(min = 10, message = "Title must be more than 10 characters")
     private String title;
+    @NotEmpty(message = "Description cannot be empty")
+    @Size(min = 20, message = "Description must be more than 20 characters")
     private String description;
     private TicketPriority priority;
 

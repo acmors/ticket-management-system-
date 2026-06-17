@@ -30,7 +30,6 @@ public class CreateCommentUseCase {
         comment.setContent(content);
         comment.setTicket(ticket);
         comment.setCreatedBy(user);
-        comment.setCreatedAt(LocalDate.now());
         return repositoryPort.save(comment);
     }
 }

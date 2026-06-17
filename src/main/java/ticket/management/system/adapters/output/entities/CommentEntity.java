@@ -1,10 +1,15 @@
 package ticket.management.system.adapters.output.entities;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_comment")
+@EntityListeners(AuditingEntityListener.class)
 public class CommentEntity {
 
     @Id
@@ -19,12 +24,15 @@ public class CommentEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by")
     private UserEntity createdBy;
-    private LocalDate createdAt;
+
+    @CreatedDate
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    private LocalDateTime createdAt;
 
     public CommentEntity() {
     }
 
-    public CommentEntity(Long id, String content, TicketEntity ticket, UserEntity createdBy, LocalDate createdAt) {
+    public CommentEntity(Long id, String content, TicketEntity ticket, UserEntity createdBy, LocalDateTime createdAt) {
         this.id = id;
         this.content = content;
         this.ticket = ticket;
@@ -64,11 +72,11 @@ public class CommentEntity {
         this.createdBy = createdBy;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 }

@@ -1,8 +1,15 @@
 package ticket.management.system.adapters.input.dto.auth;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 public class LoginRequest {
 
+    @Email(message = "Email cannot be null")
     private String email;
+    @NotEmpty(message = "Password cannot be null")
+    @Size(min = 8)
     private String password;
 
     public LoginRequest() {

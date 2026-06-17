@@ -24,6 +24,8 @@ public class TicketMapperDTO {
                 ticket.getDescription(),
                 ticket.getTicketPriority(),
                 ticket.getTicketStatus(),
+                ticket.getCreatedAt(),
+                ticket.getUpdatedAt(),
                 ticket.getCreatedBy(),
                 ticket.getAssignedTo()
         );

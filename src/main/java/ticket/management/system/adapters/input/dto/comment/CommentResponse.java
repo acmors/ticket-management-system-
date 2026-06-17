@@ -1,9 +1,12 @@
 package ticket.management.system.adapters.input.dto.comment;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import ticket.management.system.domain.entities.ticket.Ticket;
 import ticket.management.system.domain.entities.user.User;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 
 public class CommentResponse {
 
@@ -11,12 +14,13 @@ public class CommentResponse {
     private String content;
     private Ticket ticket;
     private User createdBy;
-    private LocalDate createdAt;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    private LocalDateTime createdAt;
 
     public CommentResponse() {
     }
 
-    public CommentResponse(Long id, String content, Ticket ticket, User createdBy, LocalDate createdAt) {
+    public CommentResponse(Long id, String content, Ticket ticket, User createdBy, LocalDateTime createdAt) {
         this.id = id;
         this.content = content;
         this.ticket = ticket;
@@ -56,11 +60,11 @@ public class CommentResponse {
         this.createdBy = createdBy;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 }

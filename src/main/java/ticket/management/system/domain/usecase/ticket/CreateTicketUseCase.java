@@ -8,7 +8,6 @@ import ticket.management.system.domain.exceptions.ResourceNotFoundException;
 import ticket.management.system.domain.ports.ticket.TicketRepositoryPort;
 import ticket.management.system.domain.ports.user.UserRepositoryPort;
 
-import java.time.LocalDate;
 import java.util.Random;
 
 public class CreateTicketUseCase {
@@ -38,7 +37,6 @@ public class CreateTicketUseCase {
 
         ticket.setTicketNumber(ticketNumber);
         ticket.setCreatedBy(user);
-        ticket.setCreatedAt(LocalDate.now());
         ticket.setTicketStatus(TicketStatus.OPEN);
         return repository.save(ticket);
     }

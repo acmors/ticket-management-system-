@@ -20,7 +20,6 @@ public class UpdateTicketStatusUseCase {
 
         if(ticket.getTicketStatus() == TicketStatus.CLOSED || ticket.getTicketStatus() == TicketStatus.RESOLVED) throw new InputFieldsInvalidException("Only OPEN or IN PROGRESS Tickets can be changed");
 
-
         ticket.setTicketStatus(updateStatus);
         return repositoryPort.save(ticket);
     }

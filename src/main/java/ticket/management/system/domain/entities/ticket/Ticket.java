@@ -1,9 +1,10 @@
 package ticket.management.system.domain.entities.ticket;
+
 import ticket.management.system.domain.entities.ticket.enums.TicketPriority;
 import ticket.management.system.domain.entities.ticket.enums.TicketStatus;
 import ticket.management.system.domain.entities.user.User;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Ticket {
 
@@ -13,15 +14,15 @@ public class Ticket {
     private String description;
     private TicketPriority ticketPriority;
     private TicketStatus ticketStatus;
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private User createdBy;
     private User assignedTo;
 
     public Ticket() {
     }
 
-    public Ticket(Long id, int ticketNumber, String title, String description, TicketPriority ticketPriority, TicketStatus ticketStatus, LocalDate createdAt, LocalDate updatedAt, User createdBy, User assignedTo) {
+    public Ticket(Long id, int ticketNumber, String title, String description, TicketPriority ticketPriority, TicketStatus ticketStatus, LocalDateTime createdAt, LocalDateTime updatedAt, User createdBy, User assignedTo) {
         this.id = id;
         this.ticketNumber = ticketNumber;
         this.title = title;
@@ -82,19 +83,19 @@ public class Ticket {
         this.ticketStatus = ticketStatus;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDate getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDate updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

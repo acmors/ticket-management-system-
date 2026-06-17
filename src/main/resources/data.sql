@@ -1,1 +1,2 @@
-INSERT INTO tb_user(id, name, email, password, role) values (15, 'marcolas', 'marcos@gemail.com', '$2a$12$F7Dv6mSFgAylj/2RNXXa7eP/1XD97kS0H8EA0uulfR8zH9WjScUOG', 'ANALYST');
+INSERT INTO tb_user(id, name, email, password, role) values (15, 'marcolas', 'marcos@gmail.com', '$2a$12$F7Dv6mSFgAylj/2RNXXa7eP/1XD97kS0H8EA0uulfR8zH9WjScUOG', 'ANALYST');
+INSERT INTO tb_user(id, name, email, password, role) values (16, 'Marcos', 'marcos12@gmail.com', '$2a$12$F7Dv6mSFgAylj/2RNXXa7eP/1XD97kS0H8EA0uulfR8zH9WjScUOG', 'COMMON');
