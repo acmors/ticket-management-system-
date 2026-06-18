@@ -1,6 +1,11 @@
 package ticket.management.system.adapters.output.repository.ticket;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import ticket.management.system.adapters.output.entities.TicketEntity;
 import ticket.management.system.adapters.output.mapper.TicketMapper;
+import ticket.management.system.domain.entities.page.PageRequest;
+import ticket.management.system.domain.entities.page.PageResponse;
 import ticket.management.system.domain.entities.ticket.Ticket;
 import ticket.management.system.domain.ports.ticket.TicketRepositoryPort;
 import java.util.List;
@@ -35,6 +40,28 @@ public class TicketRepositoryImpl implements TicketRepositoryPort {
     }
 
     @Override
+    public PageResponse<Ticket> findByCreatedBy(String email, PageRequest pageRequest) {
+        Pageable pageable =
+                org.springframework.data.domain.PageRequest.of(
+                        pageRequest.page(),
+                        pageRequest.size());
+
+        Page<TicketEntity> pageResult =
+                repository.findByCreatedBy(email, pageable);
+
+        return new PageResponse<>(
+                pageResult.getContent()
+                        .stream()
+                        .map(TicketMapper::toDomain)
+                        .toList(),
+                pageResult.getNumber(),
+                pageResult.getSize(),
+                pageResult.getTotalElements(),
+                pageResult.getTotalPages()
+        );
+    }
+
+    @Override
     public List<Ticket> findAll() {
         return repository.findAll().stream()
                 .map(TicketMapper::toDomain)
@@ -54,5 +81,22 @@ public class TicketRepositoryImpl implements TicketRepositoryPort {
     @Override
     public boolean existsByTicketNumber(int number) {
         return repository.existsByTicketNumber(number);
+    }
+
+    @Override
+    public PageResponse<Ticket> findAll(PageRequest pageRequest) {
+        Pageable pageable = org.springframework.data.domain.PageRequest.of(pageRequest.page(), pageRequest.size());
+        Page<TicketEntity> pageResult = repository.findAll(pageable);
+
+        return new PageResponse<>(
+                pageResult.getContent()
+                        .stream()
+                        .map(TicketMapper::toDomain)
+                        .toList(),
+                pageResult.getNumber(),
+                pageResult.getSize(),
+                pageResult.getTotalElements(),
+                pageResult.getTotalPages()
+        );
     }
 }

@@ -9,8 +9,11 @@ import ticket.management.system.adapters.input.dto.ticket.CreateTicketRequest;
 import ticket.management.system.adapters.input.dto.ticket.TicketResponse;
 import ticket.management.system.adapters.input.dto.ticket.UpdateTicketStatusRequest;
 import ticket.management.system.adapters.input.mapperDTO.TicketMapperDTO;
+import ticket.management.system.domain.entities.page.PageRequest;
+import ticket.management.system.domain.entities.page.PageResponse;
 import ticket.management.system.domain.entities.ticket.Ticket;
 import ticket.management.system.domain.entities.ticket.enums.TicketStatus;
+import ticket.management.system.domain.usecase.page.ListTicketsUseCase;
 import ticket.management.system.domain.usecase.ticket.*;
 
 import java.util.List;
@@ -21,16 +24,18 @@ public class TicketController {
 
     private final CreateTicketUseCase createUseCase;
     private final FindTicketByNumberUseCase findTicketByNumberUseCase;
-    private final ListAllTicketsUseCase listAllTicketsUseCase;
+    private final ListTicketsUseCase listTicketsUseCase;
     private final UpdateTicketStatusUseCase updateTicketStatusUseCase;
     private final AssignTicketUseCase assignTicketUseCase;
+    private final ListTicketByUserUseCase listTicketByUserUseCase;
 
-    public TicketController(CreateTicketUseCase createUseCase, FindTicketByNumberUseCase findTicketByNumberUseCase, ListAllTicketsUseCase listAllTicketsUseCase, UpdateTicketStatusUseCase updateTicketStatusUseCase, AssignTicketUseCase assignTicketUseCase) {
+    public TicketController(CreateTicketUseCase createUseCase, FindTicketByNumberUseCase findTicketByNumberUseCase, ListTicketsUseCase listTicketsUseCase, UpdateTicketStatusUseCase updateTicketStatusUseCase, AssignTicketUseCase assignTicketUseCase, ListTicketByUserUseCase listTicketByUserUseCase) {
         this.createUseCase = createUseCase;
         this.findTicketByNumberUseCase = findTicketByNumberUseCase;
-        this.listAllTicketsUseCase = listAllTicketsUseCase;
+        this.listTicketsUseCase = listTicketsUseCase;
         this.updateTicketStatusUseCase = updateTicketStatusUseCase;
         this.assignTicketUseCase = assignTicketUseCase;
+        this.listTicketByUserUseCase = listTicketByUserUseCase;
     }
 
     @PostMapping
@@ -45,13 +50,31 @@ public class TicketController {
 
     @GetMapping
     @PreAuthorize("hasRole('ANALYST')")
-    public ResponseEntity<List<TicketResponse>> listAllTickets(){
-        List<TicketResponse> response = listAllTicketsUseCase.execute()
-                .stream()
-                .map(TicketMapperDTO::toResponse)
-                .toList();
+    public ResponseEntity<PageResponse<TicketResponse>> listAllTicketsAnalyst(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ){
 
-        return ResponseEntity.ok(response);
+        var result = listTicketsUseCase.execute(page, size);
+
+        return ResponseEntity.ok(TicketMapperDTO.toPageResponse(result));
+    }
+
+    @GetMapping("/my-tickets")
+    public ResponseEntity<PageResponse<TicketResponse>> findMyTickets(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Authentication authentication) {
+
+        String email = authentication.getName();
+
+        PageResponse<Ticket> tickets =
+                listTicketByUserUseCase.execute(
+                        email,
+                        new PageRequest(page, size));
+
+        return ResponseEntity.ok(
+                TicketMapperDTO.toPageResponse(tickets));
     }
 
     @GetMapping("/number/{number}")

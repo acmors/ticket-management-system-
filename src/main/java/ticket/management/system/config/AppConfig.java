@@ -21,6 +21,7 @@ import ticket.management.system.domain.usecase.auth.AuthenticateUseCase;
 import ticket.management.system.domain.usecase.comment.CreateCommentUseCase;
 import ticket.management.system.domain.usecase.comment.FindCommentById;
 import ticket.management.system.domain.usecase.comment.ListAllCommentsUseCase;
+import ticket.management.system.domain.usecase.page.ListTicketsUseCase;
 import ticket.management.system.domain.usecase.ticket.*;
 import ticket.management.system.domain.usecase.user.*;
 
@@ -53,6 +54,16 @@ public class AppConfig {
         return new AssignTicketUseCase(userRepositoryPort, ticketRepositoryPort);
     }
 
+    @Bean
+    public ListTicketsUseCase listTicketsUseCase(TicketRepositoryPort ticketRepositoryPort){
+        return new ListTicketsUseCase(ticketRepositoryPort);
+    }
+
+    @Bean
+    public ListTicketByUserUseCase listTicketByUserUseCase(TicketRepositoryPort ticketRepositoryPort){
+        return new ListTicketByUserUseCase(ticketRepositoryPort);
+    }
+
     //user use case
     @Bean
     public CreateUserUseCase createUserUserCase(UserRepositoryPort userRepositoryPort, PasswordEncoder encoder){
@@ -83,6 +94,7 @@ public class AppConfig {
     public UpdateUserPasswordUseCase updateUserPasswordUseCase(UserRepositoryPort userRepositoryPort){
         return new UpdateUserPasswordUseCase(userRepositoryPort);
     }
+
 
     //comment use case
     @Bean
