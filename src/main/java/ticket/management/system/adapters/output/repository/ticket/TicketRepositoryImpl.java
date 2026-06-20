@@ -64,9 +64,9 @@ public class TicketRepositoryImpl implements TicketRepositoryPort {
     }
 
     @Override
-    public PageResponse<Ticket> findAll(PageRequest pageRequest) {
+    public PageResponse<Ticket> findAll(String email, TicketFilter filter, PageRequest pageRequest) {
         Pageable pageable = org.springframework.data.domain.PageRequest.of(pageRequest.page(), pageRequest.size());
-        Page<TicketEntity> pageResult = repository.findAll(pageable);
+        Page<TicketEntity> pageResult = repository.listByTicketFilterForAnalyst(email, filter.getStatus(), filter.getPriority(), filter.getCreatedAfter(), pageable);
 
         return new PageResponse<>(
                 pageResult.getContent()

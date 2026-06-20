@@ -39,4 +39,20 @@ public interface JpaTicketRepository extends JpaRepository<TicketEntity, Long> {
             Pageable pageable
     );
 
+    @Query("""
+        SELECT t
+        FROM TicketEntity t
+        WHERE t.assignedTo.email =:email
+            AND (:status IS NULL OR t.ticketStatus = :status)
+            AND (:priority IS NULL OR t.ticketPriority = :priority)
+            AND (CAST(:createdAfter AS timestamp) IS NULL OR t.createdAt >= :createdAfter)
+    """)
+    Page<TicketEntity> listByTicketFilterForAnalyst(
+            @Param("email") String email,
+            @Param("status") TicketStatus status,
+            @Param("priority")TicketPriority priority,
+            LocalDateTime createdAfter,
+            Pageable pageable
+    );
+
 }

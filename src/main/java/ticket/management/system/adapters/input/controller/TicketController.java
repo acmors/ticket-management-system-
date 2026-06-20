@@ -57,11 +57,14 @@ public class TicketController {
     @GetMapping
     @PreAuthorize("hasRole('ANALYST')")
     public ResponseEntity<PageResponse<TicketResponse>> listAllTicketsAnalyst(
+            Authentication authentication,
+            TicketFilter filter,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ){
 
-        var result = listTicketsUseCase.execute(page, size);
+        String email = authentication.getName();
+        var result = listTicketsUseCase.execute(email, filter,page, size);
 
         return ResponseEntity.ok(TicketMapperDTO.toPageResponse(result));
     }
