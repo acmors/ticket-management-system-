@@ -12,10 +12,14 @@ import ticket.management.system.adapters.input.mapperDTO.TicketMapperDTO;
 import ticket.management.system.domain.entities.page.PageRequest;
 import ticket.management.system.domain.entities.page.PageResponse;
 import ticket.management.system.domain.entities.ticket.Ticket;
+import ticket.management.system.domain.entities.ticket.TicketFilter;
+import ticket.management.system.domain.entities.ticket.enums.TicketPriority;
 import ticket.management.system.domain.entities.ticket.enums.TicketStatus;
 import ticket.management.system.domain.usecase.page.ListTicketsUseCase;
 import ticket.management.system.domain.usecase.ticket.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -28,14 +32,16 @@ public class TicketController {
     private final UpdateTicketStatusUseCase updateTicketStatusUseCase;
     private final AssignTicketUseCase assignTicketUseCase;
     private final ListTicketByUserUseCase listTicketByUserUseCase;
+    private final TicketFilterUseCase listTicketsByFilter;
 
-    public TicketController(CreateTicketUseCase createUseCase, FindTicketByNumberUseCase findTicketByNumberUseCase, ListTicketsUseCase listTicketsUseCase, UpdateTicketStatusUseCase updateTicketStatusUseCase, AssignTicketUseCase assignTicketUseCase, ListTicketByUserUseCase listTicketByUserUseCase) {
+    public TicketController(CreateTicketUseCase createUseCase, FindTicketByNumberUseCase findTicketByNumberUseCase, ListTicketsUseCase listTicketsUseCase, UpdateTicketStatusUseCase updateTicketStatusUseCase, AssignTicketUseCase assignTicketUseCase, ListTicketByUserUseCase listTicketByUserUseCase, TicketFilterUseCase listTicketsByFilter) {
         this.createUseCase = createUseCase;
         this.findTicketByNumberUseCase = findTicketByNumberUseCase;
         this.listTicketsUseCase = listTicketsUseCase;
         this.updateTicketStatusUseCase = updateTicketStatusUseCase;
         this.assignTicketUseCase = assignTicketUseCase;
         this.listTicketByUserUseCase = listTicketByUserUseCase;
+        this.listTicketsByFilter = listTicketsByFilter;
     }
 
     @PostMapping
@@ -64,13 +70,17 @@ public class TicketController {
     public ResponseEntity<PageResponse<TicketResponse>> findMyTickets(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) TicketStatus status,
+            @RequestParam(required = false) TicketPriority priority,
+            @RequestParam(required = false) LocalDateTime createdAfter,
             Authentication authentication) {
 
         String email = authentication.getName();
 
         PageResponse<Ticket> tickets =
-                listTicketByUserUseCase.execute(
+                listTicketsByFilter.execute(
                         email,
+                        new TicketFilter(status, priority, createdAfter),
                         new PageRequest(page, size));
 
         return ResponseEntity.ok(

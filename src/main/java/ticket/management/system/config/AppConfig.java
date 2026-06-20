@@ -64,6 +64,11 @@ public class AppConfig {
         return new ListTicketByUserUseCase(ticketRepositoryPort);
     }
 
+    @Bean
+    public TicketFilterUseCase ticketFilterUseCase(TicketRepositoryPort ticketRepositoryPort){
+        return new TicketFilterUseCase(ticketRepositoryPort);
+    }
+
     //user use case
     @Bean
     public CreateUserUseCase createUserUserCase(UserRepositoryPort userRepositoryPort, PasswordEncoder encoder){

@@ -30,3 +30,15 @@ jwt:
     key: classpath:app.key
   public:
     key: classpath:app.pub
+
+
+
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+      orm:
+        jdbc:
+          bind: TRACE
