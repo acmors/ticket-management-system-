@@ -15,6 +15,7 @@ import ticket.management.system.adapters.output.repository.user.JpaUserRepositor
 import ticket.management.system.adapters.output.repository.user.UserRepositoryImpl;
 import ticket.management.system.adapters.output.security.JwtService;
 import ticket.management.system.domain.ports.comment.CommentRepositoryPort;
+import ticket.management.system.domain.ports.notification.NotificationPort;
 import ticket.management.system.domain.ports.ticket.TicketRepositoryPort;
 import ticket.management.system.domain.ports.user.UserRepositoryPort;
 import ticket.management.system.domain.usecase.auth.AuthenticateUseCase;
@@ -30,8 +31,8 @@ public class AppConfig {
 
     //Ticket use case
     @Bean
-    public CreateTicketUseCase createTicketUseCase(TicketRepositoryPort ticketRepositoryPort, UserRepositoryPort userRepositoryPort){
-        return new CreateTicketUseCase(ticketRepositoryPort, userRepositoryPort);
+    public CreateTicketUseCase createTicketUseCase(TicketRepositoryPort ticketRepositoryPort, UserRepositoryPort userRepositoryPort, NotificationPort notificationPort){
+        return new CreateTicketUseCase(ticketRepositoryPort, userRepositoryPort, notificationPort);
     }
 
     @Bean

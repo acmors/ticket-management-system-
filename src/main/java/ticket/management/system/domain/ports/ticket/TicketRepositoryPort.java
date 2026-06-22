@@ -17,7 +17,7 @@ public interface TicketRepositoryPort {
     void deleteById(Long id);
     Optional<Ticket> findByTicketNumber(int ticketNumber);
     boolean existsByTicketNumber(int number);
-    PageResponse<Ticket> findAll(PageRequest pageRequest);
+    PageResponse<Ticket> findAll(String email, TicketFilter filter, PageRequest pageRequest);
     PageResponse<Ticket> findByFilters(String email, TicketFilter filter, PageRequest pageRequest);
 
 }

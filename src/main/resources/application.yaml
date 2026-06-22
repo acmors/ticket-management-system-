@@ -7,9 +7,9 @@ spring:
       enabled: true
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/ticket-management-db
-    username:
-    password:
+    url: jdbc:postgresql://localhost:5432/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
     driverClassName: org.postgresql.Driver
 
   jpa:
@@ -23,7 +23,7 @@ spring:
     time-zone: America/Sao_Paulo
 app:
   token:
-    secret-key: ${JWT_SECRET_KEY:Y29mcmUtZGUtc2VuaGFzLWFwaS1kZXBsb3k=}
+    secret-key: ${JWT_SECRET_KEY}
 
 jwt:
   private:
@@ -31,7 +31,9 @@ jwt:
   public:
     key: classpath:app.pub
 
-
+notification:
+  service:
+    url: ${NOTIFICATION_URL}
 
 
 logging:

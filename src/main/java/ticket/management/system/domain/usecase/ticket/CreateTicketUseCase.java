@@ -5,6 +5,7 @@ import ticket.management.system.domain.entities.ticket.enums.TicketStatus;
 import ticket.management.system.domain.entities.user.User;
 import ticket.management.system.domain.exceptions.InputFieldsInvalidException;
 import ticket.management.system.domain.exceptions.ResourceNotFoundException;
+import ticket.management.system.domain.ports.notification.NotificationPort;
 import ticket.management.system.domain.ports.ticket.TicketRepositoryPort;
 import ticket.management.system.domain.ports.user.UserRepositoryPort;
 
@@ -14,10 +15,12 @@ public class CreateTicketUseCase {
 
     private final TicketRepositoryPort repository;
     private final UserRepositoryPort userRepositoryPort;
+    private final NotificationPort notificationPort;
 
-    public CreateTicketUseCase(TicketRepositoryPort repository, UserRepositoryPort userRepositoryPort) {
+    public CreateTicketUseCase(TicketRepositoryPort repository, UserRepositoryPort userRepositoryPort, NotificationPort notificationPort) {
         this.repository = repository;
         this.userRepositoryPort = userRepositoryPort;
+        this.notificationPort = notificationPort;
     }
 
     public Ticket execute(Ticket ticket, String userEmail){
@@ -38,6 +41,11 @@ public class CreateTicketUseCase {
         ticket.setTicketNumber(ticketNumber);
         ticket.setCreatedBy(user);
         ticket.setTicketStatus(TicketStatus.OPEN);
+
+        notificationPort.notifyTicketCreated(
+                user.getEmail(), "test@analistas", ticket.getTicketNumber(), ticket.getTitle()
+        );
+
         return repository.save(ticket);
     }
 
