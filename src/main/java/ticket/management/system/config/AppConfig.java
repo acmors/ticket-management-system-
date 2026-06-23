@@ -46,8 +46,8 @@ public class AppConfig {
     }
 
     @Bean
-    public UpdateTicketStatusUseCase updateTicketStatusUseCase(TicketRepositoryPort ticketRepositoryPort){
-        return new UpdateTicketStatusUseCase(ticketRepositoryPort);
+    public UpdateTicketStatusUseCase updateTicketStatusUseCase(TicketRepositoryPort ticketRepositoryPort, NotificationPort notificationPort){
+        return new UpdateTicketStatusUseCase(ticketRepositoryPort, notificationPort);
     }
 
     @Bean

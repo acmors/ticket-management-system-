@@ -2,6 +2,7 @@ package ticket.management.system.adapters.output.repository.user;
 
 import ticket.management.system.adapters.output.mapper.UserMapper;
 import ticket.management.system.domain.entities.user.User;
+import ticket.management.system.domain.entities.user.enums.Roles;
 import ticket.management.system.domain.ports.user.UserRepositoryPort;
 
 import java.util.List;
@@ -51,5 +52,10 @@ public class UserRepositoryImpl implements UserRepositoryPort {
     @Override
     public boolean existsUserByEmail(String email) {
         return repository.existsUserByEmail(email);
+    }
+
+    @Override
+    public List<String> findAllAnalystEmails() {
+        return repository.findEmailsByRole(Roles.ANALYST);
     }
 }

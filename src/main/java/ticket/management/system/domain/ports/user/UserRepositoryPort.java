@@ -13,4 +13,6 @@ public interface UserRepositoryPort {
     void deleteById(Long id);
     Optional<User> findByEmail(String email);
     boolean existsUserByEmail(String email);
+
+    List<String> findAllAnalystEmails();
 }

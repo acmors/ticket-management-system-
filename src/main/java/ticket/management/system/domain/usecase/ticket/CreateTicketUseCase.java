@@ -9,6 +9,7 @@ import ticket.management.system.domain.ports.notification.NotificationPort;
 import ticket.management.system.domain.ports.ticket.TicketRepositoryPort;
 import ticket.management.system.domain.ports.user.UserRepositoryPort;
 
+import java.util.List;
 import java.util.Random;
 
 public class CreateTicketUseCase {
@@ -42,8 +43,10 @@ public class CreateTicketUseCase {
         ticket.setCreatedBy(user);
         ticket.setTicketStatus(TicketStatus.OPEN);
 
+        List<String> analystsEmail = userRepositoryPort.findAllAnalystEmails();
+
         notificationPort.notifyTicketCreated(
-                user.getEmail(), "test@analistas", ticket.getTicketNumber(), ticket.getTitle()
+                user.getEmail(), analystsEmail, ticket.getTicketNumber(), ticket.getTitle()
         );
 
         return repository.save(ticket);

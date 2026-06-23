@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import ticket.management.system.domain.ports.notification.NotificationPort;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -23,11 +24,11 @@ public class NotificationAdapter implements NotificationPort {
 
 
     @Override
-    public void notifyTicketCreated(String useEmail, String analystEmail, int ticketNumber, String ticketTitle) {
+    public void notifyTicketCreated(String useEmail, List<String> analystsEmail, int ticketNumber, String ticketTitle) {
         try{
             Map<String, Object> request = Map.of(
                     "userEmail", useEmail,
-                    "analystEmail", analystEmail,
+                    "analystEmail", analystsEmail,
                     "ticketNumber", ticketNumber,
                     "ticketTitle", ticketTitle
             );
@@ -37,6 +38,24 @@ public class NotificationAdapter implements NotificationPort {
 
         }catch (Exception e) {
             log.error("Falha ao notificar criação do ticket #{}: {}", ticketNumber, e.getMessage());
+        }
+    }
+
+    @Override
+    public void notifyTicketStatusUpdated(String userEmail, int ticketNumber, String ticketTitle, String oldStatus, String newStatus) {
+        try{
+            Map<String, Object> request = Map.of(
+                    "userEmail", userEmail,
+                    "ticketNumber", ticketNumber,
+                    "ticketTitle", ticketTitle,
+                    "oldStatus", oldStatus,
+                    "newStatus", newStatus
+            );
+
+            restTemplate.postForEntity(notificationUrl + "/api/notification/ticket-updated", request, Void.class);
+            log.info("Notificação enviada: Ticket #{} atualizado de {} pra {}", ticketNumber, oldStatus, newStatus);
+        }catch (Exception e){
+            log.error("Falha ao notificar update do ticket #{}: {}", ticketNumber, e.getMessage());
         }
     }
 }
