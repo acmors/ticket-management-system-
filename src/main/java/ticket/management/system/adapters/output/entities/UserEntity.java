@@ -1,5 +1,6 @@
 package ticket.management.system.adapters.output.entities;
 import jakarta.persistence.*;
+import ticket.management.system.domain.entities.user.UserVerification;
 import ticket.management.system.domain.entities.user.enums.Roles;
 
 @Entity
@@ -12,19 +13,22 @@ public class UserEntity {
     private String name;
     private String email;
     private String password;
-
     @Enumerated(EnumType.STRING)
     private Roles role;
 
-    public UserEntity(Long id, String name, String email, String password, Roles role) {
+    @Embedded
+    private UserVerificationEntity userVerification;
+
+    public UserEntity() {
+    }
+
+    public UserEntity(Long id, String name, String email, String password, Roles role, UserVerificationEntity userVerification) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
-    }
-
-    public UserEntity() {
+        this.userVerification = userVerification;
     }
 
     public Long getId() {
@@ -65,5 +69,13 @@ public class UserEntity {
 
     public void setRole(Roles role) {
         this.role = role;
+    }
+
+    public UserVerificationEntity getUserVerification() {
+        return userVerification;
+    }
+
+    public void setUserVerification(UserVerificationEntity userVerification) {
+        this.userVerification = userVerification;
     }
 }

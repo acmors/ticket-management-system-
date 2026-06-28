@@ -12,7 +12,8 @@ public class UserMapper {
                 user.getName(),
                 user.getEmail(),
                 user.getPassword(),
-                user.getRole()
+                user.getRole(),
+                UserVerificationMapper.toEntity(user.getVerification())
         );
     }
 
@@ -24,7 +25,8 @@ public class UserMapper {
                 entity.getName(),
                 entity.getEmail(),
                 entity.getPassword(),
-                entity.getRole()
+                entity.getRole(),
+                UserVerificationMapper.toDomain(entity.getUserVerification())
         );
     }
 }

@@ -4,9 +4,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
+import ticket.management.system.adapters.output.kafka.KafkaEventPublisherAdapter;
 import ticket.management.system.adapters.output.mapper.CommentMapper;
 import ticket.management.system.adapters.output.mapper.TicketMapper;
 import ticket.management.system.adapters.output.mapper.UserMapper;
+import ticket.management.system.adapters.output.mapper.UserVerificationMapper;
 import ticket.management.system.adapters.output.repository.comment.CommentRepositoryImpl;
 import ticket.management.system.adapters.output.repository.comment.JpaCommentRepository;
 import ticket.management.system.adapters.output.repository.ticket.JpaTicketRepository;
@@ -15,6 +17,7 @@ import ticket.management.system.adapters.output.repository.user.JpaUserRepositor
 import ticket.management.system.adapters.output.repository.user.UserRepositoryImpl;
 import ticket.management.system.adapters.output.security.JwtService;
 import ticket.management.system.domain.ports.comment.CommentRepositoryPort;
+import ticket.management.system.domain.ports.event.EventPublisherPort;
 import ticket.management.system.domain.ports.notification.NotificationPort;
 import ticket.management.system.domain.ports.ticket.TicketRepositoryPort;
 import ticket.management.system.domain.ports.user.UserRepositoryPort;
@@ -72,8 +75,8 @@ public class AppConfig {
 
     //user use case
     @Bean
-    public CreateUserUseCase createUserUserCase(UserRepositoryPort userRepositoryPort, PasswordEncoder encoder){
-        return new CreateUserUseCase(userRepositoryPort, encoder);
+    public CreateUserUseCase createUserUserCase(UserRepositoryPort userRepositoryPort, PasswordEncoder encoder, EventPublisherPort eventPublisherPort){
+        return new CreateUserUseCase(userRepositoryPort, encoder, eventPublisherPort);
     }
 
     @Bean
@@ -101,6 +104,15 @@ public class AppConfig {
         return new UpdateUserPasswordUseCase(userRepositoryPort);
     }
 
+    @Bean
+    public VerifyUserUseCase  verifyUserUseCase(UserRepositoryPort userRepositoryPort){
+        return new VerifyUserUseCase(userRepositoryPort);
+    }
+
+    @Bean
+    public EventPublisherPort eventPublisherPort(KafkaEventPublisherAdapter adapter) {
+        return adapter;
+    }
 
     //comment use case
     @Bean
@@ -144,6 +156,7 @@ public class AppConfig {
         return new CommentRepositoryImpl(jpaCommentRepository);
     }
 
+
     @Bean
     public TicketMapper ticketMapper(){
         return new TicketMapper();
@@ -154,4 +167,7 @@ public class AppConfig {
 
     @Bean
     public CommentMapper commentMapper(){return new CommentMapper();}
+
+    @Bean
+    public UserVerificationMapper userVerificationMapper(){return new UserVerificationMapper();}
 }

@@ -9,16 +9,18 @@ public class User {
     private String email;
     private String password;
     private Roles role;
+    private UserVerification verification;
 
-    public User(Long id, String name, String email, String password, Roles role) {
+    public User() {
+    }
+
+    public User(Long id, String name, String email, String password, Roles role, UserVerification verification) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
-    }
-
-    public User() {
+        this.verification = verification;
     }
 
     public Long getId() {
@@ -59,5 +61,13 @@ public class User {
 
     public void setRole(Roles role) {
         this.role = role;
+    }
+
+    public UserVerification getVerification() {
+        return verification;
+    }
+
+    public void setVerification(UserVerification verification) {
+        this.verification = verification;
     }
 }

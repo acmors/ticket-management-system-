@@ -22,7 +22,7 @@ public class AuthenticateUseCase {
         boolean passwordMatches = passwordEncoder.matches(password, user.getPassword());
 
         if(!passwordMatches) throw new InvalidCredentialsException("Wrong password");
-
+        if (!user.getVerification().isVerified()) throw new InvalidCredentialsException("User is not verified");
         return jwtService.generateToken(user);
     }
 }
