@@ -46,7 +46,10 @@ public class CreateTicketUseCase {
         List<String> analystsEmail = userRepositoryPort.findAllAnalystEmails();
 
         notificationPort.notifyTicketCreated(
-                user.getEmail(), analystsEmail, ticket.getTicketNumber(), ticket.getTitle()
+                user.getEmail(),
+                analystsEmail,
+                ticket.getTicketNumber(),
+                ticket.getTitle()
         );
 
         return repository.save(ticket);
