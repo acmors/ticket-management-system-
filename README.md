@@ -172,7 +172,6 @@ Este projeto utiliza um serviço independente para envio de e-mails.
 Responsabilidades:
 
 - Verificação de conta
-- Recuperação de senha
 - Notificação de criação de tickets
 - Notificação para analistas
 - Templates HTML com Thymeleaf
